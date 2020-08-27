@@ -3,11 +3,10 @@ const mongodb = require('mongodb');
 
 const mongoClient = mongodb.MongoClient;
 
-const conditions = ['Mint', 'Near Mint', 'Damaged'];
-const trueOrFalse = [true, false];
-const guitarCategories = ['Acoustic', 'Bass', 'Electric'];
-
 const generateProductAndSeller = () => {
+  const conditions = ['Mint', 'Near Mint', 'Damaged'];
+  const trueOrFalse = [true, false];
+  const guitarCategories = ['Acoustic', 'Bass', 'Electric'];
   var productAndSellerArray = [];
 
   for (var i = 1; i <= 100; i++) {
@@ -60,3 +59,5 @@ mongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true, useUni
     });
   }
 });
+
+module.exports = generateProductAndSeller;

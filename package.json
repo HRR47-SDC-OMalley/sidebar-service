@@ -6,7 +6,7 @@
   "scripts": {
     "server-dev": "nodemon server/server.js",
     "build": "webpack --config webpack.config.js",
-    "seed": "node ./server/seeding.js",
+    "seed": "node ./database/seeding.js",
     "test": "jest --detectOpenHandles --coverage",
     "build-production": "webpack -p"
   },
