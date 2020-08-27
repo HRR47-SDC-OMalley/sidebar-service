@@ -1,6 +1,10 @@
-sidebar
+## Reburke
 
-    Display the detailed information of the product and seller
+    A mock e-commerce page for buying and selling guitars.
+
+# Sidebar Service
+
+    A microservice detailing information about products and sellers.
 
 Related Projects
 
@@ -39,6 +43,14 @@ npm install
 ### Seeding
 
 npm run seed
+
+### CRUD API
+
+All requests made to '/sb/api/item/:id'
+Create: Post new item to the database. Request takes an object and a unused ID
+Read: Get information for a single product and seller
+Update: Update any product or seller information. Request takes an object and a valid ID
+Delete: Delete information about a single product and seller
 
 ## Production
 
