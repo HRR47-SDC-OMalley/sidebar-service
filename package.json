@@ -9,8 +9,8 @@
     "seed": "node ./database/seeding.js",
     "test": "jest --detectOpenHandles --coverage",
     "build-production": "webpack -p",
-    "pg": "node postgres.js",
-    "cs": "node cassandra.js"
+    "pg": "node loadPostgres.js",
+    "cs": "node loadCassandra.js"
   },
   "repository": {
     "type": "git",
