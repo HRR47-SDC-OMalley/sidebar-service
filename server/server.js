@@ -9,9 +9,9 @@ app.use('/', (req, res, next) => {
   next();
 });
 
-app.get('*/bundle.js', (req, res) => {
-  res.redirect('https://hrr47-fec-sidebar.s3.ap-northeast-2.amazonaws.com/js/bundle.js');
-});
+// app.get('*/bundle.js', (req, res) => {
+//   res.redirect('https://hrr47-fec-sidebar.s3.ap-northeast-2.amazonaws.com/js/bundle.js');
+// });
 
 app.use(express.static(`${__dirname}/../public`));
 app.use('/item/:id', express.static(`${__dirname}/../public`));
@@ -32,12 +32,19 @@ app.post('/sb/api/item/:id', (req, res) => {
 
 //read
 app.get('/sb/api/item/:id', (req, res) => {
-  const id = req.params.id;
+  // const id = req.params.id;
   // look for the first data in the list if no id is passed in
-  db.getAllProductAndSellerInfo(Number(id) || 0, (err, result) => {
+  // console.log('get request received')
+  const idIndex = req.url.indexOf('item') + 5;
+  // console.log(idIndex)
+  const id = req.url.substr(idIndex);
+  // console.log(id)
+  // console.log(req.params.id)
+  db.getAllProductAndSellerInfo(req.params.id || 0, (err, result) => {
     if (err) {
       res.status(404).send('Not found!');
     } else {
+      console.log(result)
       res.send(result);
     }
   });

@@ -2,49 +2,13 @@ const fs = require('fs');
 const faker = require('faker');
 // const generateProductAndSeller = require('./seeding.js');
 
-const writeStream = fs.createWriteStream('./generateData.csv');
+const writeStream = fs.createWriteStream('./generateProducts.csv');
 
-// let index = 1;
-// const generateProductAndSeller = (index) => {
+function writeTenMillionTimes(writer, encoding, callback) {
+  const start = new Date();
   const conditions = ['Mint', 'Near Mint', 'Damaged'];
   const trueOrFalse = [true, false];
   const guitarCategories = ['Acoustic', 'Bass', 'Electric'];
-//   var productAndSellerArray = [];
-
-//   for (var i = 1; i <= 100; i++) {
-//     var product = {
-//       name: faker.name.findName(),
-//       condition: conditions[Math.floor(Math.random() * 3)],
-//       shippingFee: Math.floor(Math.random() * 51) + 50, // range 50~100
-//       priceOriginal: (Math.floor(Math.random() * 21) + 20) * 100, // range 2000~4000
-//       isOpenToOffers: trueOrFalse[Math.floor(Math.random() * 2)],
-//       category: guitarCategories[Math.floor(Math.random() * 3)],
-//       style: `${faker.fake('{{commerce.productAdjective}}')} Guitar`,
-//       brand: faker.fake('{{company.companyName}}')
-//     };
-//     // need to finish defining product before able to get that value
-//     product.priceActual = Math.floor(product.priceOriginal * 0.008) * 100; // 20% off, trim
-
-//     var seller = {
-//       name: faker.name.findName(),
-//       address: faker.address.streetAddress(),
-//       isQuickShipper: trueOrFalse[Math.floor(Math.random() * 2)],
-//       joinYear: Math.floor(Math.random() * 61) + 1960, // range 1960~2020
-//       reviews: {
-//         rating: Math.floor(Math.random() * 6) // range 0~5
-//       }
-//     };
-
-//     productAndSellerArray.push({ id: index, product, seller });
-//     index++;
-//   }
-
-//   return productAndSellerArray;
-// };
-const start = new Date();
-// console.log(new Date())
-// console.log('//////////////START////////////////')
-function writeOneMillionTimes(writer, callback) {
   let i = 10000000;
   let id = 0;
   write();
@@ -53,35 +17,12 @@ function writeOneMillionTimes(writer, callback) {
     do {
       i--;
       id++;
-      const data = {};
-      data.id = id;
-      var product = {
-        name: faker.name.findName(),
-        condition: conditions[Math.floor(Math.random() * 3)],
-        shippingFee: Math.floor(Math.random() * 51) + 50, // range 50~100
-        priceOriginal: (Math.floor(Math.random() * 21) + 20) * 100, // range 2000~4000
-        isOpenToOffers: trueOrFalse[Math.floor(Math.random() * 2)],
-        category: guitarCategories[Math.floor(Math.random() * 3)],
-        style: `${faker.fake('{{commerce.productAdjective}}')} Guitar`,
-        brand: faker.fake('{{company.companyName}}')
-      };
-      // need to finish defining product before able to get that value
-      product.priceActual = Math.floor(product.priceOriginal * 0.008) * 100; // 20% off, trim
+      const priceOriginal = (Math.floor(Math.random() * 21) + 20) * 100;
+      const product = `${id}, ${faker.name.findName()}, ${conditions[Math.floor(Math.random() * 3)]}, ${Math.floor(Math.random() * 51) + 50}, ${priceOriginal}, ${trueOrFalse[Math.floor(Math.random() * 2)]}, ${guitarCategories[Math.floor(Math.random() * 3)]}, ${faker.fake('{{commerce.productAdjective}}')} Guitar, ${faker.fake('{{company.companyName}}')}, ${Math.floor(priceOriginal * 0.008) * 100}\n`;
 
-      var seller = {
-        name: faker.name.findName(),
-        address: faker.address.streetAddress(),
-        isQuickShipper: trueOrFalse[Math.floor(Math.random() * 2)],
-        joinYear: Math.floor(Math.random() * 61) + 1960, // range 1960~2020
-        reviews: {
-          rating: Math.floor(Math.random() * 6) // range 0~5
-        }
-      };
-      data.product = product;
-      data.seller = seller;
       if (i === 0) {
         // Last time!
-        writer.write(JSON.stringify(data), callback);
+        writer.write(product, encoding, callback);
         const memoryUsage = process.memoryUsage();
         const end = new Date() - start;
         console.log('Execution time: %dms', end);
@@ -89,7 +30,7 @@ function writeOneMillionTimes(writer, callback) {
       } else {
         // See if we should continue, or wait.
         // Don't pass the callback, because we're not done yet.
-        ok = writer.write(JSON.stringify(data));
+        ok = writer.write(product, encoding);
       }
     } while (i > 0 && ok);
     if (i > 0) {
@@ -100,16 +41,24 @@ function writeOneMillionTimes(writer, callback) {
   }
 }
 
-writeOneMillionTimes(writeStream, (err, res) => {
+writeTenMillionTimes(writeStream, 'utf-8', (err, res) => {
   if (err) {
     throw err;
   } else {
-    console.log('done')
+    console.log('done');
   }
-})
+});
 
 
-// const readFile = fs.readFile('./generateData.csv', 'utf8', (err, result) => {
-//   console.log(result)
 
-// });
+// if (id % Math.floor(Math.random() * 5) === 0) {
+//   seller = {
+//     name: faker.name.findName(),
+//     address: faker.address.streetAddress(),
+//     isQuickShipper: trueOrFalse[Math.floor(Math.random() * 2)],
+//     joinYear: Math.floor(Math.random() * 61) + 1960, // range 1960~2020
+//     reviews: {
+//       rating: Math.floor(Math.random() * 6) // range 0~5
+//     }
+//   };
+// }

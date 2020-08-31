@@ -19,10 +19,10 @@ class Sidebar extends React.Component {
   componentDidMount() {
     // send a get request for the product and seller infomation
     axios.get(`/sb/api/${PATH}`)
-      .then((result) => {
+    .then((result) => {
         this.setState({
           product: result.data.product,
-          seller: result.data.seller
+          seller: result.data.product.seller
         });
       })
       .catch(() => null);
