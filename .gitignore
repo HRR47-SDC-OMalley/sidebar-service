@@ -38,7 +38,4 @@ bower_components/
 
 database/sellerData.csv
 database/productData.csv
-
-# Unused data generator
-
-database/newgenerator.js
+database/productDataCS.csv

@@ -12,8 +12,8 @@ const pool = new Pool({
 
 const createSellersTable = `
   CREATE TABLE IF NOT EXISTS sellers (
-    id serial PRIMARY KEY,
-    name varchar(60),
+    seller_id serial PRIMARY KEY,
+    sellerName varchar(60),
     address varchar(100),
     isQuickShipper boolean,
     joinYear smallint,
@@ -23,8 +23,8 @@ const createSellersTable = `
 
 const createProductsTable = `
   CREATE TABLE IF NOT EXISTS products (
-  id serial PRIMARY KEY,
-  name varchar(60),
+  product_id serial PRIMARY KEY,
+  productName varchar(60),
   condition varchar(9),
   shippingFee smallint,
   priceOriginal smallint,
@@ -33,12 +33,12 @@ const createProductsTable = `
   category varchar(9),
   style varchar(30),
   brand varchar(60),
-  sellerID integer REFERENCES sellers (id)
+  sellerID integer REFERENCES sellers (seller_id)
   );
 `;
 
-const loadSellers = `COPY sellers (id, name, address, isQuickShipper, joinYear, reviews) FROM STDIN WITH DELIMITER ',' CSV HEADER;`;
-const loadProducts = `COPY products (id, name, condition, shippingFee, priceOriginal, priceActual, isOpenToOffers, category, style, brand, sellerID) FROM STDIN WITH DELIMITER ',' CSV HEADER;`;
+const loadSellers = `COPY sellers (seller_id, sellerName, address, isQuickShipper, joinYear, reviews) FROM STDIN WITH DELIMITER ',' CSV HEADER;`;
+const loadProducts = `COPY products (product_id, productName, condition, shippingFee, priceOriginal, priceActual, isOpenToOffers, category, style, brand, sellerID) FROM STDIN WITH DELIMITER ',' CSV HEADER;`;
 
 pool.connect((err, client, done) => {
   client.query(createSellersTable, (err) => {

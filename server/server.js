@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const db = require('../database/database.js');
+const pg = require('../database/queryFunctions.js')
 
 const app = express();
 
@@ -32,22 +33,27 @@ app.post('/sb/api/item/:id', (req, res) => {
 
 //read
 app.get('/sb/api/item/:id', (req, res) => {
-  // const id = req.params.id;
-  // look for the first data in the list if no id is passed in
-  // console.log('get request received')
-  const idIndex = req.url.indexOf('item') + 5;
-  // console.log(idIndex)
-  const id = req.url.substr(idIndex);
-  // console.log(id)
-  // console.log(req.params.id)
-  db.getAllProductAndSellerInfo(req.params.id || 0, (err, result) => {
+  //legacy code get request to mongo database
+  // db.getAllProductAndSellerInfo(req.params.id || 0, (err, result) => {
+  //   if (err) {
+  //     res.status(404).send('Not found!');
+  //   } else {
+  //     console.log(result)
+  //     res.send(result);
+  //   }
+  // });
+
+  //get request to postgres db
+  pg.getProductInfoFromPG(req.params.id || 0, (err, result) => {
     if (err) {
       res.status(404).send('Not found!');
     } else {
-      console.log(result)
-      res.send(result);
+      res.send(result)
     }
-  });
+  })
+
+  //get request to cassandra db
+
 });
 
 //update

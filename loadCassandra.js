@@ -1,20 +1,10 @@
-CREATE KEYSPACE sidebar WITH replication = {'class': 'SimpleStrategy', 'replication-factor': 3};
+CREATE KEYSPACE sidebar WITH replication ={'class':'SimpleStrategy','replication_factor':3};
 
 USE sidebar;
 
-CREATE TABLE sellers (
-    seller_id int,
-    name text,
-    address text,
-    isQuickShipper boolean,
-    joinYear int,
-    reviews int,
-    PRIMARY KEY(seller_id)
-  );
-
-CREATE TABLE products (
+const createProductTable = `CREATE TABLE products (
     product_id int,
-    name text,
+    productName text,
     condition text,
     shippingFee int,
     priceOriginal int,
@@ -23,10 +13,15 @@ CREATE TABLE products (
     category text,
     style text,
     brand text,
-    seller_id int,
-    PRIMARY KEY(product_id, seller_id)
-  );
+    sellerName text,
+    address text,
+    isQuickShipper boolean,
+    joinYear int,
+    reviews int,
+    PRIMARY KEY(product_id)
+  );`
 
-COPY sellers (seller_id, name, address, isQuickShipper, joinYear, reviews) FROM '/Users/hewbahrami/sidebar-service/database/sellerData.csv' WITH DELIMITER=',' AND HEADER=TRUE;
+const loadProducts = `COPY products(product_id, productName, condition, shippingFee, priceOriginal, priceActual, isOpenToOffers, category, style, brand, sellerName, address, isQuickShipper, joinYear, reviews) FROM '/Users/hewbahrami/sidebar-service/database/productDataCS.csv' WITH DELIMITER=',' AND HEADER=TRUE;`
 
-COPY products(product_id, name, condition, shippingFee, priceOriginal, priceActual, isOpenToOffers, category, style, brand, seller_id) FROM '/Users/hewbahrami/sidebar-service/database/productData.csv' WITH DELIMITER=',' AND HEADER=TRUE;
+
+// \copy (SELECT p.product_id, p.productName, p.condition, p.shippingFee, p.priceOriginal, p.priceActual, p.isOpenToOffers, p.category, p.style, p.brand, s.sellerName, s.address, s.isQuickShipper, s.joinYear, s.reviews FROM products p INNER JOIN sellers s ON p.sellerID=s.seller_id) TO '/Users/hewbahrami/sidebar-service/database/productDataCS.csv' CSV HEADER;

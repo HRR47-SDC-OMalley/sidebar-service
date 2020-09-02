@@ -10,7 +10,7 @@ class Sidebar extends React.Component {
     super(props);
     this.state = {
       product: props.product || {},
-      seller: props.seller || { reviews: { rating: 0 } },
+      // seller: props.seller || { reviews: { rating: 0 } },
       isWatched: false
     };
   }
@@ -21,9 +21,18 @@ class Sidebar extends React.Component {
     axios.get(`/sb/api/${PATH}`)
     .then((result) => {
         this.setState({
-          product: result.data.product,
-          seller: result.data.product.seller
+          //legacy code set state
+          // product: result.data.product,
+          // seller: result.data.product.seller
+
+          //postgres set state
+          product: result.data.rows[0],
+
+          //cassandra set state
+
+
         });
+        console.log(this.state)
       })
       .catch(() => null);
   }
@@ -51,13 +60,13 @@ class Sidebar extends React.Component {
     return (
       <div className="sb-bigSpace">
         <div className="sb-smallText">
-          Shipping fee: {this.state.product.shippingFee}
+          Shipping fee: {this.state.product.shippingfee}
         </div>
         <div className="sb-lineThroughText">
-          ${this.state.product.priceOriginal}
+          ${this.state.product.priceoriginal}
         </div>
         <div className="sb-bold sb-bigText">
-          ${this.state.product.priceActual}
+          ${this.state.product.priceactual}
         </div>
         <div className="sb-smallText sb-grey">
           +Shipping
@@ -84,7 +93,7 @@ class Sidebar extends React.Component {
   }
 
   openToOffer() {
-    if (this.state.product.isOpenToOffers) {
+    if (this.state.product.isopentooffers) {
       return (
         <div className="sb-smallText sb-goldenrod sb-dialogBubble">
           This seller is open to offers
@@ -94,7 +103,8 @@ class Sidebar extends React.Component {
   }
 
   shippingSpeed() {
-    if (this.state.seller.isQuickShipper) {
+    // if (this.state.seller.isQuickShipper) {
+      if (this.state.product.isquickshipper) {
       return (
         <div className="sb-greyBottomBorder">
           <div className="sb-bigSpace sb-floatLeft">
@@ -157,7 +167,8 @@ class Sidebar extends React.Component {
     return (
       <div>
         <div>Joined Reverb</div>
-        <div>{this.state.seller.joinedYear}</div>
+        {/* <div>{this.state.seller.joinedYear}</div> */}
+        <div>{this.state.product.joinyear}</div>
       </div>
     );
   }
@@ -168,7 +179,7 @@ class Sidebar extends React.Component {
         <Style.Global />
         <div className="sb-whole">
           {this.categoryStyleBrand()}
-          <div className="sb-bigText">{this.state.product.name}</div>
+          <div className="sb-bigText">{this.state.product.productname}</div>
           {this.condition()}
           {this.cost()}
           <button className="sb-bigButton">Add to Cart</button>
@@ -190,9 +201,12 @@ class Sidebar extends React.Component {
           <section className="sb-smallText">
             <div className="sb-bigSpace sb-grey sb-half sb-floatLeft">
               Shipped From
-              <div className="sb-bold sb-black">{this.state.seller.name}</div>
-              <div>{this.state.seller.address}</div>
-              {this.sellerRaiting(this.state.seller.reviews.rating)}
+              {/* <div className="sb-bold sb-black">{this.state.seller.name}</div> */}
+              <div className="sb-bold sb-black">{this.state.product.sellername}</div>
+              {/* <div>{this.state.seller.address}</div> */}
+              <div>{this.state.product.address}</div>
+              {/* {this.sellerRaiting(this.state.seller.reviews.rating)} */}
+              {this.sellerRaiting(this.state.product.reviews)}
               {this.joinedYear()}
             </div>
             <div className="sb-extraSpace sb-blue">
