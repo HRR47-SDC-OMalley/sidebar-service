@@ -51,7 +51,8 @@ const getAllProductAndSellerInfo = (id, callback) => {
     } else {
       // try to access the db and get some data
       const db = client.db('reburke');
-      db.collection('reburke').findOne({ id }, (error, result) => {
+      console.log(parseInt(id, 10))
+      db.collection('reburke').findOne({id: parseInt(id, 10)}, (error, result) => {
         if (error || !result) {
           const emptyResultError = new Error('Not Found');
           emptyResultError.status = 404;

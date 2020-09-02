@@ -5,10 +5,12 @@
   "main": "index.js",
   "scripts": {
     "server-dev": "nodemon server/server.js",
-    "build": "webpack --config webpack.config.js",
+    "build": "webpack --config webpack.config.js --watch",
     "seed": "node ./database/seeding.js",
     "test": "jest --detectOpenHandles --coverage",
-    "build-production": "webpack -p"
+    "build-production": "webpack -p",
+    "pg": "node loadPostgres.js",
+    "cs": "node loadCassandra.js"
   },
   "repository": {
     "type": "git",
@@ -29,12 +31,16 @@
     "babel-jest": "^26.2.2",
     "babel-loader": "^8.1.0",
     "body-parser": "^1.19.0",
+    "cassandra-driver": "^4.6.0",
+    "csv-write-stream": "^2.0.0",
     "express": "^4.17.1",
     "faker": "^4.1.0",
     "jest": "^26.2.2",
     "mongodb": "^3.6.0",
     "node.js": "0.0.1-security",
     "nodemon": "^2.0.4",
+    "pg": "^8.3.3",
+    "pg-copy-streams": "^5.1.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-test-renderer": "^16.13.1",
