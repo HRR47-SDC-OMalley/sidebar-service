@@ -3,10 +3,10 @@ const fs = require('fs');
 const copyFrom = require('pg-copy-streams').from;
 
 const pool = new Pool({
-  user: "hewbahrami",
+  user: "postgres",
   host: "localhost",
   database: "sidebar",
-  password: "password",
+  password: "postgres",
   port: 5432
 });
 
@@ -41,6 +41,9 @@ const loadSellers = `COPY sellers (seller_id, sellerName, address, isQuickShippe
 const loadProducts = `COPY products (product_id, productName, condition, shippingFee, priceOriginal, priceActual, isOpenToOffers, category, style, brand, sellerID) FROM STDIN WITH DELIMITER ',' CSV HEADER;`;
 
 pool.connect((err, client, done) => {
+  if (err) {
+    throw err;
+  }
   client.query(createSellersTable, (err) => {
     if (err) throw err;
     client.query(createProductsTable, (err) => {
@@ -73,3 +76,9 @@ pool.connect((err, client, done) => {
     });
   });
 });
+
+
+
+// UBUNTU POSTGRES LOAD FROM COMMAND LINE
+// \copy sellers (seller_id, sellerName, address, isQuickShipper, joinYear, reviews) FROM /home/ubuntu/sidebar-service/database/sellerData.csv WITH DELIMITER ',' CSV HEADER;
+// \copy products (product_id, productName, condition, shippingFee, priceOriginal, priceActual, isOpenToOffers, category, style, brand, sellerID) FROM /home/ubuntu/sidebar-service/database/productData.csv WITH DELIMITER ',' CSV HEADER;

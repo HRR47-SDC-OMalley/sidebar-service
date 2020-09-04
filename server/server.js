@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const db = require('../database/database.js');
-const pg = require('../database/queryFunctions.js')
+const pg = require('../database/queryFunctions.js');
+require('newrelic');
 
 const app = express();
 
@@ -51,10 +52,16 @@ app.get('/sb/api/item/:id', (req, res) => {
       res.send(result)
     }
   })
-
+})
   //get request to cassandra db
-
-});
+//   pg.getProductInfoFromCS(req.params.id || 0, (err, result) => {
+//     if(err) {
+//       res.status(404).send('Not found!');
+//     } else {
+//       res.send(result);
+//     }
+//   });
+// });
 
 //update
 app.put('/sb/api/item/:id', (req, res) => {

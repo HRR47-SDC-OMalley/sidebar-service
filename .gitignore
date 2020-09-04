@@ -39,3 +39,6 @@ bower_components/
 database/sellerData.csv
 database/productData.csv
 database/productDataCS.csv
+
+#New Relic
+newrelic.js

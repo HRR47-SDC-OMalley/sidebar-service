@@ -1,0 +1,27 @@
+config:
+  target: "http://localhost:3210"
+  processor: './artilleryFunc.js'
+  phases:
+    - duration: 60
+      arrivalRate: 10
+      name: Warm up
+    - duration: 120
+      arrivalRate: 10
+      rampTo: 100
+      name: Ramp up to 100
+    - duration: 600
+      arrivalRate: 100
+      rampTo: 1000
+      name: Ramp up to 1000
+    - duration: 600
+      arrivalRate: 1000
+      rampTo: 10000
+      name: Ramp up to 10000
+scenarios:
+  # We define one scenario:
+  - name: "Get products"
+    flow:
+      - function: "randomNumber"
+      # Get the details of the product:
+      - get:
+          url: "/sb/api/item/{{id}}"

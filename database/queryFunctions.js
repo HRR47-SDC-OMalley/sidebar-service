@@ -18,12 +18,10 @@ const clientCS = new cassie.Client({
 
 const getProductInfoFromPG = (id, callback) => {
   const query = `SELECT * FROM products inner join sellers ON products.sellerID = sellers.seller_id WHERE products.product_id = ${id};`
-  // console.log(query)
-  pool.connect()
+  poolPG.connect()
     .then(client => {
       client.query(query)
         .then((result) => {
-          // console.log(result.rows[0])
           callback(null, result);
           client.release();
         })
@@ -34,10 +32,17 @@ const getProductInfoFromPG = (id, callback) => {
 }
 
 const getProductInfoFromCS = (id, callback) => {
-  const query = `SELECT * FROM products ON`
-}
+  const query = `SELECT * FROM products WHERE product_id=${id};`
+  clientCS.execute(query)
+    .then((result) => {
+      callback(null, result);
+    })
+    .catch(err => {
+      if (err) throw err;
+    });
+};
 
 module.exports = {
   getProductInfoFromPG,
-  getProductInfoFromCS,
+  getProductInfoFromCS
 }
