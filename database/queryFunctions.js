@@ -1,29 +1,21 @@
 const { Pool } = require('pg');
 const fs = require('fs');
-const cassie = require('cassandra-driver');
+require('dotenv').config();
 
 const poolPG = new Pool({
-  user: "hewbahrami",
-  host: "localhost",
-  database: "sidebar",
-  password: "password",
-  port: 5432
+  user: process.env.POSTGRES_USER || "hewbahrami",
+  host: process.env.POSTGRES_HOST || "localhost",
+  database: process.env.POSTGRES_DB || "sidebar",
+  password: process.env.POSTGRES_PASS || "password",
+  port: process.env.POSTGRES_PORT,
 });
-
-const clientCS = new cassie.Client({
-  contactPoints: ['localhost'],
-  localDataCenter: 'datacenter1',
-  keyspace: 'sidebar',
-})
 
 const getProductInfoFromPG = (id, callback) => {
   const query = `SELECT * FROM products inner join sellers ON products.sellerID = sellers.seller_id WHERE products.product_id = ${id};`
-  // console.log(query)
-  pool.connect()
+  poolPG.connect()
     .then(client => {
       client.query(query)
         .then((result) => {
-          // console.log(result.rows[0])
           callback(null, result);
           client.release();
         })
@@ -33,11 +25,8 @@ const getProductInfoFromPG = (id, callback) => {
     })
 }
 
-const getProductInfoFromCS = (id, callback) => {
-  const query = `SELECT * FROM products ON`
-}
+
 
 module.exports = {
   getProductInfoFromPG,
-  getProductInfoFromCS,
-}
+};

@@ -37,6 +37,7 @@
     "faker": "^4.1.0",
     "jest": "^26.2.2",
     "mongodb": "^3.6.0",
+    "newrelic": "^6.13.0",
     "node.js": "0.0.1-security",
     "nodemon": "^2.0.4",
     "pg": "^8.3.3",
@@ -48,6 +49,8 @@
     "webpack": "^4.44.1"
   },
   "devDependencies": {
+    "artillery": "^1.6.1",
+    "dotenv": "^8.2.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.3",
     "eslint": "^7.6.0",
