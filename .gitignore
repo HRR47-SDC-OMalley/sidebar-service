@@ -42,3 +42,6 @@ database/productDataCS.csv
 
 #New Relic
 newrelic.js
+
+#ENV
+.env

@@ -26,7 +26,6 @@
     "@babel/core": "^7.11.1",
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
-    "artillery": "^1.6.1",
     "axios": "^0.19.2",
     "babel": "^6.23.0",
     "babel-jest": "^26.2.2",
@@ -50,6 +49,8 @@
     "webpack": "^4.44.1"
   },
   "devDependencies": {
+    "artillery": "^1.6.1",
+    "dotenv": "^8.2.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.3",
     "eslint": "^7.6.0",

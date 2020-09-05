@@ -1,13 +1,14 @@
 const { Pool } = require('pg');
 const fs = require('fs');
 const copyFrom = require('pg-copy-streams').from;
+require('dotenv').config();
 
 const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "sidebar",
-  password: "postgres",
-  port: 5432
+  user: process.env.POSTGRES_USER || "hewbahrami",
+  host: process.env.POSTGRES_HOST || "localhost",
+  database: process.env.POSTGRES_DB || "sidebar",
+  password: process.env.POSTGRES_PASS || "password",
+  port: process.env.POSTGRES_PORT,
 });
 
 const createSellersTable = `

@@ -1,15 +1,17 @@
+require('newrelic');
 const express = require('express');
 const bodyParser = require('body-parser');
 const db = require('../database/database.js');
 const pg = require('../database/queryFunctions.js');
-require('newrelic');
+// const cs = require('../database/queryTestCS.js');
+require('dotenv').config();
 
 const app = express();
 
-app.use('/', (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
-});
+// app.use('/', (req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   next();
+// });
 
 // app.get('*/bundle.js', (req, res) => {
 //   res.redirect('https://hrr47-fec-sidebar.s3.ap-northeast-2.amazonaws.com/js/bundle.js');
@@ -46,15 +48,18 @@ app.get('/sb/api/item/:id', (req, res) => {
 
   //get request to postgres db
   pg.getProductInfoFromPG(req.params.id || 0, (err, result) => {
+    // console.log('first')
     if (err) {
+      // console.log('error')
       res.status(404).send('Not found!');
     } else {
+      // console.log(result)
       res.send(result)
     }
   })
 })
   //get request to cassandra db
-//   pg.getProductInfoFromCS(req.params.id || 0, (err, result) => {
+//   cs.getProductInfoFromCS(req.params.id || 0, (err, result) => {
 //     if(err) {
 //       res.status(404).send('Not found!');
 //     } else {
@@ -90,7 +95,7 @@ app.delete('/sb/api/item/:id', (req, res) => {
   });
 });
 
-const port = 3210;
+const port = process.env.SERVER_PORT;
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);

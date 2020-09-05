@@ -1,7 +1,6 @@
 const fs = require('fs');
 const csvWriter = require('csv-write-stream');
 const faker = require('faker');
-// const { sellers, writeThreeMillionSellers} = require('./generateSellers.js');
 
 const products = csvWriter({
   headers: [
