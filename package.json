@@ -8,9 +8,10 @@
     "build": "webpack --config webpack.config.js --watch",
     "seed": "node ./database/seeding.js",
     "test": "jest --detectOpenHandles --coverage",
+    "stress": "artillery run ./spec/load-test/load_test_service.yml",
     "build-production": "webpack -p",
-    "pg": "node loadPostgres.js",
-    "cs": "node loadCassandra.js"
+    "pg": "node ./database/loadPostgres.js",
+    "cs": "node ./database/loadCassandra.js"
   },
   "repository": {
     "type": "git",

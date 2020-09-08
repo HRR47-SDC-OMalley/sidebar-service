@@ -95,7 +95,7 @@ app.delete('/sb/api/item/:id', (req, res) => {
   });
 });
 
-const port = process.env.SERVER_PORT;
+const port = process.env.SERVER_PORT || 3210;
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
