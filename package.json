@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server-dev": "nodemon server/server.js",
+    "server-dev": "nodemon server/SDCserver.js",
     "build": "webpack --config webpack.config.js --watch",
     "seed": "node ./database/seeding.js",
     "test": "jest --detectOpenHandles --coverage",
