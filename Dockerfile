@@ -1,11 +1,10 @@
-FROM node:12
+FROM node:10
 
 WORKDIR /sidebar-service
 COPY package*.json ./
 RUN npm install
 
-EXPOSE 3210
-
 COPY . .
 
+EXPOSE 3210
 CMD [ "node", "server/server.js" ]

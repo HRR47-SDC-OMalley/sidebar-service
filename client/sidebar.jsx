@@ -20,7 +20,6 @@ class Sidebar extends React.Component {
     // send a get request for the product and seller infomation
     axios.get(`/sb/api/${PATH}`)
     .then((result) => {
-      console.log(result.data)
         this.setState({
           //legacy code set state
           // product: result.data.product,
@@ -30,9 +29,7 @@ class Sidebar extends React.Component {
           product: result.data.rows[0],
           //cassandra set state
 
-
         });
-        console.log(this.state)
       })
       .catch(() => null);
   }
